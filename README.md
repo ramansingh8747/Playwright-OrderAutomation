@@ -22,3 +22,15 @@ The framework is designed to be scalable, maintainable, and reusable for real-wo
 * Screenshot and Video Capture on Failure
 * HTML Report Generation
 * Git & GitHub Version Control
+
+## Tech Stack
+
+- **Automation Tool:** Playwright
+- **Programming Language:** JavaScript (ES6+)
+- **Test Framework:** Playwright Test
+- **Design Pattern:** Page Object Model (POM)
+- **PDF Parsing:** pdf-parse
+- **Version Control:** Git
+- **Repository Hosting:** GitHub
+- **IDE:** Visual Studio Code
+- **Package Manager:** npm
