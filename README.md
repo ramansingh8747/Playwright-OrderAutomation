@@ -101,4 +101,44 @@ npx playwright test tests/orderFlow.spec.js
 
 ```bash
 npx playwright show-report
+
+
+## Test Flow
+
+The automation follows the complete order placement journey:
+
+1. Launch Application
+2. Login with Valid Credentials
+3. Navigate to Product Category
+4. Select Product
+5. Add Product to Cart
+6. Proceed to Checkout
+7. Enter Shipping Address
+8. Review Order
+9. Complete Payment
+10. Download Invoice PDF
+11. Parse PDF Data
+12. Validate UI vs PDF
+13. Validate Invoice Calculations
+
+## Future Enhancements
+
+- Environment Configuration using `.env`
+- Data-Driven Testing
+- Multiple Product Automation
+- Multiple Category Support
+- API Testing
+- Allure Reporting
+- Docker Integration
+- Jenkins CI/CD Pipeline
+- GitHub Actions
+- Cross Browser Execution
+
+## Author
+
+**Chandra Bhushan Kumar**
+
+QA Automation Engineer
+
+**GitHub:** https://github.com/ramansingh8747
 ```
