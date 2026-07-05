@@ -50,3 +50,55 @@ Playwright-OrderAutomation/
 │── README.md              # Project documentation
 │── .gitignore             # Ignored files
 ```
+
+## Installation
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/ramansingh8747/Playwright-OrderAutomation.git
+```
+
+### Navigate to the Project
+
+```bash
+cd Playwright-OrderAutomation
+```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Install Playwright Browsers
+
+```bash
+npx playwright install
+```
+
+## Run Tests
+
+### Run All Tests
+
+```bash
+npx playwright test
+```
+
+### Run Tests in Headed Mode
+
+```bash
+npx playwright test --headed
+```
+
+### Run Specific Test
+
+```bash
+npx playwright test tests/orderFlow.spec.js
+```
+
+### View HTML Report
+
+```bash
+npx playwright show-report
+```
