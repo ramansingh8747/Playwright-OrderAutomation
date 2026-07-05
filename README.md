@@ -34,3 +34,19 @@ The framework is designed to be scalable, maintainable, and reusable for real-wo
 - **Repository Hosting:** GitHub
 - **IDE:** Visual Studio Code
 - **Package Manager:** npm
+
+
+## Project Structure
+
+```text
+Playwright-OrderAutomation/
+│── pages/                 # Page Object Model classes
+│── tests/                 # Test scripts
+│── testData/              # JSON test data
+│── utils/                 # Utility functions (PDF Parser, Validators, etc.)
+│── downloads/             # Downloaded invoice PDFs
+│── playwright.config.js   # Playwright configuration
+│── package.json           # Project dependencies
+│── README.md              # Project documentation
+│── .gitignore             # Ignored files
+```
