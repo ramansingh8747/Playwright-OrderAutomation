@@ -14,7 +14,7 @@ import { PdfReader } from '../utils/PdfReader';
 import { PdfParser } from '../utils/PdfParser';
 import { Calculator } from '../utils/Calculator';
 import { Compare } from '../utils/Compare';
-const config = require('../config/config');
+//const config = require('../config/config');
 
 
 test('Frontend Login', async ({ page }) => {
@@ -37,15 +37,23 @@ test('Frontend Login', async ({ page }) => {
     const compare = new Compare();
 
     // Launch Website
-    await page.goto(config.loginURL, {
-        waitUntil: 'domcontentloaded',
-        timeout: 60000
+    await page.goto(process.env.LOGIN_URL, {
+             waitUntil: 'domcontentloaded',
+         timeout: 60000
     });
+    // await page.goto(config.loginURL, {
+    //     waitUntil: 'domcontentloaded',
+    //     timeout: 60000
+    // });
     //await loginPage.login('587574337', '12345678');
+    // await loginPage.login(
+    //     userData.mobile,
+    //     userData.password
+    // );
     await loginPage.login(
-        userData.mobile,
-        userData.password
-    );
+    process.env.MOBILE,
+    process.env.PASSWORD
+);
 
     // Home Page
     await homePage.openHome();
@@ -100,7 +108,7 @@ test('Frontend Login', async ({ page }) => {
     //await thankYouPage.verifyOrderPlaced();
 
     // Direct My Orders page
-    await page.goto(config.myOrdersURL, {
+     await page.goto(process.env.MY_ORDERS_URL, {
         waitUntil: 'domcontentloaded',
         timeout: 60000
     });

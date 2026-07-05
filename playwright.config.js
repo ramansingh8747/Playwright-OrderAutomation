@@ -1,3 +1,7 @@
+//Environment variables are loaded from the .env file using dotenv package
+import dotenv from 'dotenv';
+
+dotenv.config();
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
 
@@ -36,6 +40,7 @@ export default defineConfig({
   // Shared settings
   use: {
     // baseURL: 'https://your-url.com',
+    baseURL: process.env.BASE_URL,
 
     headless: false,
 

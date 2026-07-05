@@ -11,3 +11,4 @@ downloads/
 /test-results/
 /playwright-report/
 /node_modules/
+/.env/
