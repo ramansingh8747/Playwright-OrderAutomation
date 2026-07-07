@@ -1,5 +1,6 @@
-const userData = require('../testdata/userData.json');
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/baseFixture';
+
+//import { test, expect } from '@playwright/test';
 import { LoginPage } from '../frontend/LoginPage';
 import { HomePage } from '../frontend/HomePage';
 import { ProductPage } from '../frontend/ProductPage';
@@ -8,29 +9,53 @@ import { AddressPage } from '../frontend/AddressPage';
 import { PaymentPage } from '../frontend/PaymentPage';
 import { ThreeDSPage } from '../frontend/ThreeDSPage';
 import { ThankYouPage } from '../frontend/ThankYouPage';
-import { MyOrdersPage } from '../frontend/MyOrderPage';
-import { OrderInfoPage } from '../frontend/OrderInfoPage';
+import { MyOrderPage } from '../frontend/MyOrderPage';
+import { OrderinfoPage } from '../frontend/OrderinfoPage';
 import { PdfReader } from '../utils/PdfReader';
 import { PdfParser } from '../utils/PdfParser';
 import { Calculator } from '../utils/Calculator';
 import { Compare } from '../utils/Compare';
 //const config = require('../config/config');
 
+const userData = require('../testdata/userData.json');
 
-test('Frontend Login', async ({ page }) => {
+userData.forEach((card) => {
+
+    test(`Frontend Login - ${card.holder}`, async ({
+        page,
+        loginPage,
+        homePage,
+        productPage,
+        cartPage,
+        addressPage,
+        paymentPage,
+        threeDSPage,
+        thankYouPage,
+        MyOrderPage,
+        OrderinfoPage
+    }) => {
+
+        // Yahan tumhara pura existing test code rahega
+
+    });
+
+});
+
+
+test('Frontend Login', async ({ page, loginPage, homePage, productPage, cartPage, addressPage, paymentPage, threeDSPage, thankYouPage, MyOrderPage, OrderinfoPage }) => {
 
     // Object Creation
-    const loginPage = new LoginPage(page);
-    const cartPage = new CartPage(page);
-    const homePage = new HomePage(page);
-    const paymentPage = new PaymentPage(page);
-    const productPage = new ProductPage(page);
-    const addressPage = new AddressPage(page);
+    //const loginPage = new LoginPage(page);
+    //const cartPage = new CartPage(page);
+    //const homePage = new HomePage(page);
+    //const paymentPage = new PaymentPage(page);
+    //const productPage = new ProductPage(page);
+    //const addressPage = new AddressPage(page);
     //const reviewPage = new ReviewPage(page);
-    const threeDSPage = new ThreeDSPage(page);
-    const thankYouPage = new ThankYouPage(page);
-    const myOrdersPage = new MyOrdersPage(page);
-    const orderInfoPage = new OrderInfoPage(page);
+    //const threeDSPage = new ThreeDSPage(page);
+    // const thankYouPage = new ThankYouPage(page);
+    // const myOrdersPage = new MyOrdersPage(page);
+    // const orderInfoPage = new OrderInfoPage(page);
     const pdfReader = new PdfReader();
     const pdfParser = new PdfParser();
     const calculator = new Calculator();
@@ -38,8 +63,8 @@ test('Frontend Login', async ({ page }) => {
 
     // Launch Website
     await page.goto(process.env.LOGIN_URL, {
-             waitUntil: 'domcontentloaded',
-         timeout: 60000
+        waitUntil: 'domcontentloaded',
+        timeout: 60000
     });
     // await page.goto(config.loginURL, {
     //     waitUntil: 'domcontentloaded',
@@ -51,9 +76,9 @@ test('Frontend Login', async ({ page }) => {
     //     userData.password
     // );
     await loginPage.login(
-    process.env.MOBILE,
-    process.env.PASSWORD
-);
+        process.env.MOBILE,
+        process.env.PASSWORD
+    );
 
     // Home Page
     await homePage.openHome();
@@ -82,13 +107,16 @@ test('Frontend Login', async ({ page }) => {
 
     //await reviewPage.continueToPayment();
 
+    const userData = require('../testdata/userData.json');
+    const card = userData[0];
+
     // Payment Page
     await paymentPage.makePayment(
-        userData.cardNo,
-        userData.month,
-        userData.year,
-        userData.holder,
-        userData.cvv
+        card.cardNo,
+        card.month,
+        card.year,
+        card.holder,
+        card.cvv
     );
     // await paymentPage.makePayment(
     //         '4572691010000046',
@@ -108,20 +136,20 @@ test('Frontend Login', async ({ page }) => {
     //await thankYouPage.verifyOrderPlaced();
 
     // Direct My Orders page
-     await page.goto(process.env.MY_ORDERS_URL, {
+    await page.goto(process.env.MY_ORDERS_URL, {
         waitUntil: 'domcontentloaded',
         timeout: 60000
     });
 
-    await myOrdersPage.openLatestOrder();
+    await MyOrderPage.openLatestOrder();
 
     // Order Info Page
-    const orderNo = await orderInfoPage.getOrderNumber();
+    const orderNo = await OrderinfoPage.getOrderNumber();
 
     console.log("UI Order Number :", orderNo);
 
     // Download Invoice
-    const pdfPath = await orderInfoPage.downloadInvoice();
+    const pdfPath = await OrderinfoPage.downloadInvoice();
 
     console.log("PDF Path :", pdfPath);
 
@@ -163,12 +191,12 @@ test('Frontend Login', async ({ page }) => {
     // UI Data
     const uiData = {
         orderNo: orderNo,
-        productName: await orderInfoPage.getProductName(),
-        unitPrice: await orderInfoPage.getUnitPrice(),
-        quantity: await orderInfoPage.getQuantity(),
-        discount: await orderInfoPage.getDiscount(),
-        totalCost: await orderInfoPage.getTotalCost(),
-        paidByCard: await orderInfoPage.getPaidByCard()
+        productName: await OrderinfoPage.getProductName(),
+        unitPrice: await OrderinfoPage.getUnitPrice(),
+        quantity: await OrderinfoPage.getQuantity(),
+        discount: await OrderinfoPage.getDiscount(),
+        totalCost: await OrderinfoPage.getTotalCost(),
+        paidByCard: await OrderinfoPage.getPaidByCard()
     };
 
     console.log(uiData);

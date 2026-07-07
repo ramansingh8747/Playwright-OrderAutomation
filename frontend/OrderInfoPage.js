@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import path from 'path';
 
-export class OrderInfoPage {
+export class OrderinfoPage {
 
     constructor(page) {
         this.page = page;
