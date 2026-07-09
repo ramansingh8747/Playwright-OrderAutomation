@@ -1,3 +1,4 @@
+ import { CONSTANTS } from '../config/constants';
 export class PaymentPage {
 
     constructor(page) {
@@ -17,7 +18,9 @@ export class PaymentPage {
     // Bas seedha click - agar button jaldi mil gaya to jaldi hi click ho jayega
     await this.cardButton.click({ timeout: 20000 });
 
-    await this.page.waitForTimeout(1000);
+   
+
+    await this.page.waitForTimeout(CONSTANTS.PAYMENT_WAIT);
 
     await this.cardNumber.click();
     await this.cardNumber.fill(cardNo);

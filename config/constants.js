@@ -1,0 +1,6 @@
+export const CONSTANTS = {
+    OTP: '1234',
+    VAT_PERCENTAGE: 6,
+    PAYMENT_WAIT: 1000,
+    PAGE_LOAD_TIMEOUT: 60000
+};
