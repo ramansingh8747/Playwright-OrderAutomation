@@ -18,6 +18,7 @@ import { Compare } from '../utils/Compare';
 
 const cards = require('../testdata/cards.json');
 const users = require('../testdata/users.json');
+const products = require('../testdata/products.json');
 //const config = require('../config/config');
 
 
@@ -68,6 +69,7 @@ users.forEach((user, index) => {
 
 
         const card = cards[index % cards.length]; // Cycle through cards if there are more users than cards
+        const product = products[index % products.length]; // Cycle through products if there are more users than products
 
 
         //const user = users[0];
@@ -102,7 +104,7 @@ users.forEach((user, index) => {
         await homePage.openEntertainmentCategory();
 
         // Product Page
-        await productPage.addProductToCart();
+        await productPage.addProductToCart(product);
 
 
         // Cart Page
