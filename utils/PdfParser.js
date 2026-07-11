@@ -1,22 +1,23 @@
+import products from '../testdata/products.json';
 export class PdfParser {
 
     static parse(pdfText) {
 
         const text = pdfText.replace(/\s+/g, ' ');
+        const productSection = text.match(/ProductsSKUQtyUnit Price[\s\S]*?Subtotal:/);
 
+        console.log("Product Section:");
+        console.log(productSection ? productSection[0] : "Not Found");
+
+        console.log("PDF Text:", text);
         const getValue = (regex) => {
             const match = text.match(regex);
             return match ? match[1].trim() : null;
         };
 
         const orderNo = getValue(/Order No:\s*([A-Z0-9]+)/);
-        const productName = getValue(
-            /1\s+([A-Za-z0-9]+[\s\S]*?)\s+AVPA3SL/
-        );
-
-        const cleanProductName = productName
-            ? productName.replace(/\s+/g, ' ').trim()
-            : null;
+        const cleanProductName =
+            products.find(product => text.includes(product.name))?.name || null;
 
         const unitPrice = parseFloat(
             getValue(/AVPA3SL128-00987\s+\d+\s+([\d,]+\.\d+)/)?.replace(/,/g, '')
@@ -25,8 +26,12 @@ export class PdfParser {
             getValue(/AVPA3SL128-00987\s+(\d+)/),
             10
         );
-        const invoiceDate = getValue(/Invoice Date:\s*(.+)/);
-        const orderDate = getValue(/Order Date:\s*(.+)/);
+        //const invoiceDate = getValue(/Invoice Date:\s*(.+)/);
+        const invoiceDate = getValue(/Invoice Date:\s*(.*?)\s*Order Date:/);
+        const orderDate = getValue(/Order Date:\s*(.*?)\s*Supplier:/);
+        console.log("Invoice Date:", invoiceDate);
+        console.log("Order Date:", orderDate);
+        //const orderDate = getValue(/Order Date:\s*(.+)/);
 
         // Change 1: yaha se "\s+" hata diya
         const paymentMethod = getValue(/AED([A-Z]+)\d/);

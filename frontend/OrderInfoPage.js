@@ -15,9 +15,7 @@ export class OrderinfoPage {
         this.downloadInvoiceLink = page.getByRole('link', {
             name: 'Download Your Invoice'
         });
-        this.productName = page.getByRole('link').filter({
-            hasText: 'AppleVisionPro'
-        }).first();
+        this.productName = page.locator('a[href*="/p/"]').nth(1);
 
         this.totalCost = page.getByText('Total Cost: AED').nth(1);
 
@@ -25,69 +23,88 @@ export class OrderinfoPage {
 
         this.discount = page.getByText('Discount : (-) AED');
 
-        this.quantity = page.getByText(/Qty\s*:\s*\d+/);
+        this.quantity = page.locator(
+            '.row.border-top.border-bottom .hide-at-768'
+        ).nth(1);
 
-        this.unitPrice = page.getByText('AED 1,800').first();
+        this.unitPrice = page.locator(
+            '.row.border-top.border-bottom .hide-at-768'
+        ).first();
+
+        this.amount = page.locator(
+            '.row.border-top.border-bottom .hide-at-768'
+        ).nth(2);
     }
 
 
     async getOrderNumber() {
 
-    // Thoda zyada timeout - order info page load hone ka wait
-    await expect(this.orderNo).toBeVisible({ timeout: 15000 });
+        // Thoda zyada timeout - order info page load hone ka wait
+        await expect(this.orderNo).toBeVisible({ timeout: 15000 });
 
-    const text = await this.orderNo.textContent();
+        const text = await this.orderNo.textContent();
 
-    const orderNo = text.replace('Order No:', '').trim();
+        const orderNo = text.replace('Order No:', '').trim();
 
-    console.log("Order Number :", orderNo);
+        console.log("Order Number :", orderNo);
 
-    return orderNo;
-}
+        return orderNo;
+    }
 
     async downloadInvoice() {
 
-    const downloadPromise = this.page.waitForEvent('download');
+        const downloadPromise = this.page.waitForEvent('download');
 
-    await this.downloadInvoiceLink.click();
+        await this.downloadInvoiceLink.click();
 
-    const download = await downloadPromise;
+        const download = await downloadPromise;
 
-    const filePath = `downloads/${download.suggestedFilename()}`;
+        const filePath = `downloads/${download.suggestedFilename()}`;
 
-    await download.saveAs(filePath);
+        await download.saveAs(filePath);
 
-    console.log(filePath);
+        console.log(filePath);
 
-    return filePath;
-}
+        return filePath;
+    }
 
-async getProductName() {
-    return (await this.productName.textContent()).trim();
-}
+    async getProductName() {
 
-async getTotalCost() {
-    const text = await this.totalCost.textContent();
-    return Number(text.replace(/[^\d.]/g, '').replace(',', ''));
-}
+        console.log(
+            "Product Links:",
+            await this.page.locator('a[href*="/p/"]').count()
+        );
 
-async getPaidByCard() {
-    const text = await this.paidByCard.textContent();
-    return Number(text.replace(/[^\d.]/g, '').replace(',', ''));
-}
+        return (await this.productName.textContent()).trim();
+    }
 
-async getDiscount() {
-    const text = await this.discount.textContent();
-    return Number(text.replace(/[^\d.]/g, '').replace(',', ''));
-}
+    async getTotalCost() {
+        const text = await this.totalCost.textContent();
+        return Number(text.replace(/[^\d.]/g, '').replace(',', ''));
+    }
 
-async getQuantity() {
-    const text = await this.quantity.textContent();
-    return Number(text.match(/\d+/)[0]);
-}
+    async getPaidByCard() {
+        const text = await this.paidByCard.textContent();
+        return Number(text.replace(/[^\d.]/g, '').replace(',', ''));
+    }
 
-async getUnitPrice() {
-    const text = await this.unitPrice.textContent();
+    async getDiscount() {
+        const text = await this.discount.textContent();
+        return Number(text.replace(/[^\d.]/g, '').replace(',', ''));
+    }
+
+    async getQuantity() {
+        const text = await this.quantity.textContent();
+        return Number(text.match(/\d+/)[0]);
+    }
+
+    async getUnitPrice() {
+        const text = await this.unitPrice.textContent();
+        return Number(text.replace(/[^\d.]/g, '').replace(',', ''));
+    }
+
+    async getAmount() {
+    const text = await this.amount.textContent();
     return Number(text.replace(/[^\d.]/g, '').replace(',', ''));
 }
 }
