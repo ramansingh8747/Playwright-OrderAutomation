@@ -15,11 +15,14 @@ import { PdfReader } from '../utils/PdfReader';
 import { PdfParser } from '../utils/PdfParser';
 import { Calculator } from '../utils/Calculator';
 import { Compare } from '../utils/Compare';
+import { Logger } from '../utils/Logger';
+
 
 const cards = require('../testdata/cards.json');
 const users = require('../testdata/users.json');
 const products = require('../testdata/products.json');
 const TestDataManager = require('../utils/TestDataManager');
+
 
 const testDataManager = new TestDataManager();
 console.log(testDataManager.users.length);
@@ -57,6 +60,9 @@ testDataManager.users.forEach((_, index) => {
 
     test(
         `Frontend Login - ${testDataManager.getTestData(index).user.mobile}`,
+        {
+            tag: ['@smoke', '@payment']
+        },
         async ({ page, loginPage, homePage, productPage, cartPage, addressPage, paymentPage, threeDSPage, thankYouPage, MyOrderPage, OrderinfoPage }) => {
 
             // Object Creation
@@ -139,8 +145,8 @@ testDataManager.users.forEach((_, index) => {
             // const userData = require('../testdata/userData.json');
             // const card = userData[0];
 
-            console.log(`User: ${user.mobile}`);
-            console.log(`Card: ${card.cardNo}`);
+            Logger.info(`User: ${user.mobile}`);
+            Logger.info(`Card: ${card.cardNo}`);
 
             // Payment Page
             await paymentPage.makePayment(

@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 export class CartPage {
 
     constructor(page) {
@@ -14,6 +15,11 @@ export class CartPage {
 
     async proceedToCheckout() {
         await this.continueToCheckout.click();
+
+        await expect(this.continueToPayment).toBeVisible({
+            timeout: 30000
+        });
+
         await this.continueToPayment.click();
     }
 }

@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 export class ProductPage {
 
     constructor(page) {
@@ -19,8 +20,10 @@ export class ProductPage {
 
         console.log("Selected Product:", product.name);
         console.log("Matching Products:", await productCard.count());
+         await expect(productCard).toHaveCount(1);
 
         const buyButton = productCard.locator('a.btn.btn-primary');
+       
 
         console.log("BUY Button Count:", await buyButton.count());
 
